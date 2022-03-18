@@ -1,14 +1,6 @@
 <?php
-header("Access-Control-Allow-Origin: * ");
-header("Access-Control-Allow-Credentials:true");
-header("Access-Control-Allow-Methods: GET");
-header("Access-Control-Allow-Headers: Content-Type");
-header("Access-Control-Max-Age: 3600");
-header("content-type: application/json");
-
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS"){
-    return 0;
-}
+require_once "inc/functions.php";
+require_once "inc/headers.php";
 
 
 try {

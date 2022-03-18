@@ -1,21 +1,17 @@
 <?php
-header("Access-Control-Allow-Origin:*");
-header("Access-Control-Allow-Credentials:true");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type", "Access-Control-Allow-Header");
-header("Access-Control-Max-Age: 3600");
-header("content-type: application/json");
+require_once "inc/functions.php";
+require_once "inc/headers.php";
 
-if ($_SERVER["REQUEST_METHOD"] === "OPTIONS"){
-    return 0;
-}
+
 
 $input = json_decode(file_get_contents("php://input"));
 $description = filter_var($input->description,FILTER_SANITIZE_SPECIAL_CHARS);
 $amount = filter_var($input->amount,FILTER_SANITIZE_SPECIAL_CHARS);
 
 try {
-$db = new PDO("mysql:host=localhost;dbname=shoppinglist;charset=utf8","root","");
+    $db = new PDO("mysql:host=localhost;dbname=shoppinglist;charset=utf8","root","");
+    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+//$db = new PDO("mysql:host=localhost;dbname=shoppinglist;charset=utf8","root","");
 $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
 $query = $db->prepare("insert into item(description, amount) values (:description, :amount)");
